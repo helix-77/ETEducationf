@@ -55,13 +55,18 @@
       document.addEventListener("DOMContentLoaded", function () {
         const hash = window.location.hash;
         const messageElement = document.getElementById("message");
+        console.log("Processing hash:", hash);
 
         // If there's a hash, we need to handle the authentication
         if (hash) {
           messageElement.textContent = "Verifying your identity...";
 
+          // This is critical for Supabase auth to work correctly
+          // We need to preserve the ENTIRE hash including all the tokens
+
           if (hash.includes("type=recovery")) {
-            // This is a password reset link
+            // This is a password reset link - preserve all tokens
+            console.log("Password reset flow detected");
             setTimeout(() => {
               window.location.href = "reset_password.html" + hash;
             }, 1000);
@@ -70,11 +75,13 @@
             hash.includes("type=signup")
           ) {
             // This is a magic link or signup confirmation
+            console.log("Magic link or signup flow detected");
             setTimeout(() => {
               window.location.href = "profile.html" + hash;
             }, 1000);
           } else {
-            // Some other authentication flow
+            // Some other authentication flow - try to handle generically
+            console.log("Generic auth flow detected");
             setTimeout(() => {
               window.location.href = "profile.html" + hash;
             }, 1000);
