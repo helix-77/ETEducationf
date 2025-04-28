@@ -4,9 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title id="dynamic-title">ETEducation Portal</title>
-    <script type="module" src="/navigation.js"></script>
-    <script type="module" src="/signup-page-script.js"></script>
+    <script type="module" src="navigation.js"></script>
+    <script type="module" src="signup-page-script.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      function handleSignUp(event) {
+        event.preventDefault();
+        if (window.signUp) {
+          window.signUp();
+        } else {
+          console.error("signUp function not available");
+          alert("Error: Unable to process signup. Please try again later.");
+        }
+      }
+
+      function handleTogglePassword() {
+        if (window.toggleSignupPassword) {
+          window.toggleSignupPassword();
+        }
+      }
+    </script>
     <style>
       @keyframes fadeIn {
         0% {
@@ -149,7 +166,7 @@
       <h2 class="text-3xl font-bold text-center text-violet-700">Sign Up</h2>
       <p class="text-gray-600 text-center mt-2">Create a new account</p>
 
-      <form class="mt-6" onsubmit="event.preventDefault(); signUp();">
+      <form class="mt-6" onsubmit="handleSignUp(event)">
         <div class="mb-4">
           <label class="block text-gray-700 font-medium">Full Name</label>
           <input
@@ -183,7 +200,7 @@
           />
           <button
             type="button"
-            onclick="toggleSignupPassword()"
+            onclick="handleTogglePassword()"
             class="toggle-password"
           >
             👁
