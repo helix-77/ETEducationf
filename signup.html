@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="dynamic-title">ETEducation Portal</title>
+    <script type="module" src="/navigation.js"></script>
+    <script type="module" src="/signup-page-script.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .dynamic-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #f5f2f8;
+        letter-spacing: 2px;
+        animation: fadeIn 1s ease-out forwards;
+      }
+
+      .dynamic-title span {
+        color: #efd8e0;
+      }
+
+      .toggle-password {
+        position: absolute;
+        top: 36px; /* Fixed position */
+        right: 12px;
+        cursor: pointer;
+        color: #6a0dad;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <nav
+      class="bg-violet-700 text-white p-4 flex justify-between items-center shadow-md w-full"
+    >
+      <div class="flex items-center space-x-3">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1765/1765425.png"
+          alt="ETEducation Logo"
+          class="w-10 h-10"
+        />
+        <h1 id="dynamic-title" class="dynamic-title">ETEducation</h1>
+      </div>
+      <div class="space-x-6 hidden md:flex">
+        <a href="index.html" class="text-white hover:text-gray-300 font-medium"
+          >Home</a
+        >
+        <a href="about.html" class="text-white hover:text-gray-300 font-medium"
+          >About</a
+        >
+        <a
+          href="courses.html"
+          class="text-white hover:text-gray-300 font-medium"
+          >Courses</a
+        >
+        <a
+          href="Ask questions.html"
+          class="text-white hover:text-gray-300 font-medium"
+          >Ask Questions</a
+        >
+        <a
+          href="contact.html"
+          class="text-white hover:text-gray-300 font-medium"
+          >Contact</a
+        >
+        <a
+          href="login.html"
+          id="login-btn"
+          class="bg-white text-violet-700 px-4 py-2 rounded hover:bg-gray-200 font-semibold"
+          >Login</a
+        >
+        <a
+          href="profile.html"
+          id="profile-btn"
+          class="bg-white text-violet-700 px-4 py-2 rounded hover:bg-gray-200 font-semibold"
+          style="display: none"
+          >Profile</a
+        >
+      </div>
+      <div class="md:hidden flex items-center">
+        <button id="menu-btn" class="text-white">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <div
+      id="mobile-menu"
+      class="md:hidden hidden bg-violet-700 text-white text-center space-y-4 p-4"
+    >
+      <a href="index.html" class="block hover:text-gray-300 font-medium"
+        >Home</a
+      >
+      <a href="about.html" class="block hover:text-gray-300 font-medium"
+        >About</a
+      >
+      <a href="courses.html" class="block hover:text-gray-300 font-medium"
+        >Courses</a
+      >
+      <a href="Ask questions.html" class="block hover:text-gray-300 font-medium"
+        >Ask Questions</a
+      >
+      <a href="contact.html" class="block hover:text-gray-300 font-medium"
+        >Contact</a
+      >
+      <a
+        href="login.html"
+        id="mobile-login-btn"
+        class="block bg-white text-violet-700 px-4 py-2 rounded hover:bg-gray-200 font-semibold"
+        >Login</a
+      >
+      <a
+        href="profile.html"
+        id="mobile-profile-btn"
+        class="block bg-white text-violet-700 px-4 py-2 rounded hover:bg-gray-200 font-semibold"
+        style="display: none"
+        >Profile</a
+      >
+    </div>
+
+    <!-- Sign Up Card -->
+    <div
+      class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mt-10 mx-auto"
+    >
+      <h2 class="text-3xl font-bold text-center text-violet-700">Sign Up</h2>
+      <p class="text-gray-600 text-center mt-2">Create a new account</p>
+
+      <form class="mt-6" onsubmit="event.preventDefault(); signUp();">
+        <div class="mb-4">
+          <label class="block text-gray-700 font-medium">Full Name</label>
+          <input
+            type="text"
+            id="fullname"
+            class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 font-medium">Email</label>
+          <input
+            type="email"
+            id="signup-email"
+            class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="mb-4 relative">
+          <label class="block text-gray-700 font-medium">Password</label>
+          <input
+            type="password"
+            id="signup-password"
+            class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter your password"
+            required
+          />
+          <button
+            type="button"
+            onclick="toggleSignupPassword()"
+            class="toggle-password"
+          >
+            👁
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 font-medium"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            id="confirm-password"
+            class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Confirm your password"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-indigo-700 text-white py-2 rounded-lg hover:bg-indigo-800 transition duration-300"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <p class="text-center text-gray-600 mt-4">
+        Already have an account?
+        <a href="login.html" class="text-indigo-600 hover:underline">Login</a>
+      </p>
+    </div>
+
+    <footer class="bg-violet-700 text-white text-center py-6 mt-auto">
+      <p>
+        &copy; 2025 ETEducation | Rajshahi University of Engineering &
+        Technology
+      </p>
+    </footer>
+  </body>
+</html>
