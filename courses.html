@@ -6,6 +6,15 @@
     <title>ETEducation Portal</title>
     <script type="module" src="navigation.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add non-module script to handle menu toggle and authentication -->
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        // This ensures that if window.checkAuthStatus is available, it will be called
+        if (window.checkAuthStatus) {
+          await window.checkAuthStatus();
+        }
+      });
+    </script>
     <style>
       /* Enhanced animations and styling */
       @keyframes fadeIn {
