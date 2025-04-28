@@ -19,11 +19,19 @@ async function requestPasswordReset() {
     document.getElementById("request-reset-btn").disabled = true;
     document.getElementById("request-reset-btn").textContent = "Sending...";
 
+    // Get the current site URL for proper redirection
+    const siteUrl = window.location.origin;
+    const githubPagesUrl = "https://helix-77.github.io/ETEducationf"; // Update with your actual GitHub Pages URL
+
+    // Use the appropriate URL based on environment
+    const redirectUrl =
+      siteUrl.includes("localhost") || siteUrl.includes("127.0.0.1")
+        ? `${siteUrl}/reset_password.html`
+        : `${githubPagesUrl}/reset_password.html`;
+
     // Use Supabase to send password reset email
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      //! for production build, use window.location.origin
-      redirectTo: window.location.origin + "/reset_password.html",
-      // redirectTo: "http://127.0.0.1:5500/reset_password.html",
+      redirectTo: redirectUrl,
     });
 
     if (error) {

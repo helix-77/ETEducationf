@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script type="module" src="supabase.js"></script>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 90%;
+        width: 400px;
+      }
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: #7e3af2;
+        animation: spin 1s linear infinite;
+        margin: 1rem auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Processing Authentication</h2>
+      <div class="spinner"></div>
+      <p id="message">Please wait while we process your authentication...</p>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash;
+        const messageElement = document.getElementById("message");
+
+        // If there's a hash, we need to handle the authentication
+        if (hash) {
+          messageElement.textContent = "Verifying your identity...";
+
+          if (hash.includes("type=recovery")) {
+            // This is a password reset link
+            setTimeout(() => {
+              window.location.href = "reset_password.html" + hash;
+            }, 1000);
+          } else if (
+            hash.includes("type=magiclink") ||
+            hash.includes("type=signup")
+          ) {
+            // This is a magic link or signup confirmation
+            setTimeout(() => {
+              window.location.href = "profile.html" + hash;
+            }, 1000);
+          } else {
+            // Some other authentication flow
+            setTimeout(() => {
+              window.location.href = "profile.html" + hash;
+            }, 1000);
+          }
+        } else {
+          // No hash, just redirect to home
+          messageElement.textContent =
+            "No authentication information found. Redirecting to home...";
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 2000);
+        }
+      });
+    </script>
+  </body>
+</html>
